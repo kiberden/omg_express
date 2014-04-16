@@ -1,0 +1,72 @@
+<% layout('../index') %>
+
+<h1>Личный кабинет</h1><br>
+<p> Добро пожаловать в личный кабинет</p><br>
+<p>Введите имя пользователя и пароль для доступа к личному кабинету</p><br>
+<p>Если Вы впервые на нашем сайте, зарегистрируйтесь, нажав на кнопку регистрации</p><br>
+
+
+<!-- <form class="login-form" name="login-form">
+    <label for="form-username-input" class="form-username-input">Имя пользователя:</label>
+    <input type="text" name="username" value="username" class="form-username-input" placeholder="Имя пользователя"><br>
+
+    <label for="form-password-input" class="form-password-input">Пароль:</label>
+    <input type="password" name="password" class="form-password-input"><br>
+
+    <!-- <button type="submit" class="login-button" data-loading-text="Вход...">Войти</button>
+    <input type="submit" class="login-button" data-loading-text="Вход..." value="Войти">
+
+</form>    -->
+
+<div id="login-form">
+
+    <label for="form-username-input" class="form-username-label">Имя пользователя:</label>
+    <input type="text" name="username" value="username" id="form-username-input"><br>
+
+    <label for="form-password-input" class="form-password-label">Пароль:</label>
+    <input type="password" name="password" id="form-password-input">
+    <div class="response"></div><br>
+
+    <input type="button" id="login-submit" value="Войти">
+
+    <input type="button" id="registration-button" value="Регистрация">
+</div>
+
+<script>
+    function all_right(){
+        console.log("200");
+        //location.href = "service";
+        alert("auth success");
+    };
+
+    document.getElementById('login-submit').onclick = function(){
+        alert('!!');
+        var username = document.getElementById('form-username-input').value;
+        var password = document.getElementById('form-password-input').value;
+        console.log(username + " " + password);
+
+        $.ajax({
+            type: "POST",
+            url: "auth",
+            data: {
+                username: username,
+                password: password
+            },
+            success: function(response){
+                console.log("work" + response);
+                if(response == 200)
+                    location.href = "service";
+                if(response == 403)
+                    $(".response").html("Неверный пароль");
+                if(response == 404)
+                    $(".response").html("Пользователь с таким логином не зарегестрирован");
+            }
+        })
+    };
+
+    document.getElementById('registration-button').onclick = function(){
+        location.href = "registration";
+    }
+</script>
+
+
